@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Lịch sử đấu";
+    ViewBag.route = "lich-su-dau";
+}
+<style>
+    table thead, table tbody {
+        color: snow;
+    }
+</style>
+<div class="tbl p-3 flex-grow-1 d-flex flex-column mt-3">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h3>@ViewBag.Title</h3>
+        </div>
+        <div class="d-flex">
+            @*<button class="btn btn-sm btn-outline-primary me-2">Solo</button>
+            <button class="btn btn-sm btn-outline-primary me-2 text-nowrap">Đội 5-5</button>*@
+            <div class="input-group">
+                <input class="form-control form-control-sm d-inline-block" id="searchtext" />
+                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="table" class="flex-grow-1 d-flex flex-column mt-3" style="height:100px">
+        @*Render table*@
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            function DataBind() {
+                Loading.show("#table");
+                $.ajax({
+                    url: "/gethistories",
+                    method: "GET",
+                    data: {
+                        searchtext: $("#searchtext").val(),
+                        curPage: $(".page-item.active").attr("data-pagenum") ?? 1,
+                    },
+                    error: function (err) {
+                        Loading.hide("#table");
+                        toastr.error(err);
+                    },
+                    success: function (rs) {
+                        console.log(rs);
+                        Loading.hide("#table");
+                        if (rs.success != null && rs.success != undefined && !rs.success) {
+                            Alert.Error(rs.message);
+                        }
+                        else {
+                            $("#table").html(rs);
+                        }
+                    }
+                });
+            }
+            DataBind();
+        });
+    </script>
+}

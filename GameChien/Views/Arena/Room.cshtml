@@ -1,0 +1,194 @@
+﻿@using GameChien.Models
+@using GameChien.Models.Dto
+@{
+    ViewBag.Title = "Phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.route = "dau-truong";
+}
+
+<div id="content" class="position-relative flex-grow-1"></div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var chat = $.connection.realtimeHub;
+            chat.client.pushNotifyToPlayer = function (data) {
+                if (data != null && data != undefined && data.Type != null && data.Type != undefined && data.Message != null && data.Message != undefined) {
+                    if (data.Type == "success") {
+                        toastr.success(data.Message);
+                    }
+                    else if (data.Type == "error") {
+                        toastr.error(data.Message);
+                    }
+                };
+            };
+            chat.client.updateRoom = function () {
+                DataBind();
+            };
+            $.connection.hub.start().done(function () {
+                console.log("connected to hub");
+            });
+            $.connection.hub.disconnected(function () {
+                setTimeout(function () {
+                    $.connection.hub.start();
+                }, 5000); // Re-start connection after 5 seconds
+            });
+            function DataBind() {
+                Loading.Show("#content");
+                $.ajax({
+                    url: "/Arena/PlayerRoom",
+                    method: "GET",
+                    error: function (err) {
+                        Loading.Hide("#content");
+                        toastr.error(err);
+                    },
+                    success: function (rs) {
+                        Loading.Hide("#content");
+                        if (rs.success != null && rs.success != undefined && !rs.success) {
+                            Alert.Error(rs.message);
+                        }
+                        else {
+                            $("#content").html(rs);
+                        }
+                    }
+                });
+            }
+            DataBind();
+
+
+            $("#content").on("click", "#btnLeave", function () {
+                Loading.Show("#content");
+                let Id = $(this).data("id");
+                $.ajax({
+                    url: "/Room/Leave",
+                    method: "POST",
+                    data: {
+                        roomId: Id
+                    },
+                    error: function (ex) {
+                        Loading.Hide("#content");
+                        toastr.error(ex);
+                    },
+                    success: function (rs) {
+                        Loading.Hide("#content");
+                        if (rs != undefined && rs != null) {
+                            if (rs.success != undefined && rs.success != null) {
+                                if (rs.success) {
+                                    Alert.Show("#content", true, rs.message, null);
+                                }
+                                else {
+                                    Alert.Show("#content", false, rs.message, null);
+                                }
+                            }
+                            else {
+                                $("body").html(rs);
+                            }
+                        }
+                    }
+                });
+            });
+            $("#content").on("click", "#btnReady", function () {
+                let Id = $(this).data("id");
+                $.ajax({
+                    url: '@CommonConstants.San_Sang',
+                    method: "POST",
+                    data: {
+                        roomId: Id
+                    },
+                    error: function (ex) {
+                        toastr.error(ex);
+                    },
+                    success: function (rs) {
+                        if (rs.success) {
+                            toastr.success(rs.message);
+                        }
+                        else {
+                            toastr.error(rs.message);
+                        }
+                    }
+                });
+            });
+            $("#content").on("click", "#btnStart", function () {
+                let Id = $(this).data("id");
+                $.ajax({
+                    url: "/Room/Start",
+                    method: "POST",
+                    data: {
+                        roomId: Id
+                    },
+                    error: function (ex) {
+                        toastr.error(ex);
+                    },
+                    success: function (rs) {
+                        if (rs.success) {
+                            toastr.success(rs.message);
+                        }
+                        else {
+                            toastr.error(rs.message);
+                        }
+                    }
+                });
+            });
+            function End(Id) {
+                $.ajax({
+                    url: "/Room/End",
+                    method: "POST",
+                    data: {
+                        roomId: Id
+                    },
+                    error: function (ex) {
+                        toastr.error(ex);
+                    },
+                    success: function (rs) {
+                        if (rs.success == null) {
+                            Popup.Show("Kết quả trận đấu", rs);
+                        }
+                        else {
+                            if (rs.success) {
+                                toastr.success(rs.message);
+                            }
+                            else {
+                                toastr.error(rs.message);
+                            }
+                        }
+                    }
+                });
+            }
+            $("#content").on("click", "#btnEnd", function () {
+                let Id = $(this).data("id");
+                End(Id);
+            });
+            $("body").on("click", "#vote button", function () {
+                let Id = $(this).data("id");
+                let isWin = $(this).data("iswin");
+                $.ajax({
+                    url: "/Room/Vote",
+                    method: "POST",
+                    data: {
+                        roomId: Id,
+                        isWin: isWin
+                    },
+                    error: function (ex) {
+                        toastr.error(ex);
+                    },
+                    success: function (rs) {
+                        if (rs != undefined && rs != null) {
+                            if (rs.success != undefined && rs.success != null) {
+                                if (rs.success) {
+                                    Alert.Success(message = rs.message);
+                                }
+                                else {
+                                    Alert.Error(message = rs.message);
+                                }
+                            }
+                            else {
+                                Popup.Show(rs);
+                            }
+                        }
+
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model List<GameChien.Models.Dto.RelationshipDto>
+@{
+    ViewBag.Title = "Bạn bè";
+    ViewBag.route = "ban-be";
+}
+<div class="tbl mt-3 p-4 d-flex flex-column flex-grow-1">
+    <div class="d-flex flex-row justify-content-between">
+        <div>
+            <h3>@ViewBag.Title</h3>
+        </div>
+    </div>
+    <div class="flex-grow-1">
+        <table class="table mt-3 mb-0">
+            <thead>
+                <tr>
+                    <td>Tài khoản</td>
+                    <td>Trạng thái</td>
+                    <td>Tương tác</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="r" data-id="@item.Id">
+                        <td>@item.AccountName</td>
+                        @switch (item.Status)
+                        {
+                            case (int)GameChien.Models.Enum.PlayerStatusEnum.Offline:
+                                <td class="text-info fw-bold">Offline</td>
+                                break;
+                            case (int)GameChien.Models.Enum.PlayerStatusEnum.Online:
+                                <td class="text-success fw-bold">Online</td>
+                                break;
+                            case (int)GameChien.Models.Enum.PlayerStatusEnum.InGame:
+                                <td class="text-danger fw-bold">InGame</td>
+                                break;
+                        }
+
+                        <td>
+                            <button class="btn btn-sm btn-primary"><i class="fa fa-comment-o"></i> Chat</button>
+                            <button class="btn btn-sm btn-primary"><i class="fa fa-group"></i> Tạo đội</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

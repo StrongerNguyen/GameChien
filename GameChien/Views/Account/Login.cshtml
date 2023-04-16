@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    @model GameChien.Models.FormModel.LoginFormModel
+}
+<style>
+    label span {
+        opacity: 0.8;
+    }
+</style>
+<h1 class="text-center">ĐĂNG NHẬP</h1>
+@{
+    if (ViewBag.Reg??false)
+    {
+        <div class="text-center mt-3">
+            <b class="text-success">Bạn đã đăng ký thành công, vui lòng đăng nhập.</b>
+        </div>
+    }
+}
+<form method="post" action="/dang-nhap" class="mt-3 d-flex flex-column align-items-center">
+    <label class="mb-3">
+        <span class="mb-2 d-block">Tên tài khoản</span>
+        @Html.TextBoxFor(t => t.AccountName, new { @class = "form-control" })
+    </label>
+    <label class="mb-3">
+        <span class="mb-2 d-block">Mật khẩu</span>
+        @Html.PasswordFor(t => t.Password, new { @class = "form-control" })
+    </label>
+    <label class="mb-2">
+        @Html.CheckBoxFor(t => t.RememberMe) <span>Ghi nhớ đăng nhập</span>
+    </label>
+    @Html.ValidationSummary(false, null, new { @class = "text-danger mb-3" })
+    <div>
+        <button type="submit" class="btn btn-primary">ĐĂNG NHẬP</button>
+    </div>
+</form>
+<div class="mt-3 text-center">
+    <a href="/dang-ky" class="text-decoration-none text-warning">Bạn chưa có tài khoản? <i class="fa fa-angle-double-right"></i> ĐĂNG KÝ</a>
+</div>

@@ -1,0 +1,108 @@
+﻿@model List<GameChien.Models.Data.tblDeposit>
+@{
+    ViewBag.Title = "Nạp điểm";
+    ViewBag.route = "nap-diem";
+}
+<div class="p-3 d-flex flex-column">
+    <div class="d-flex flex-row justify-content-between">
+        <div>
+            <h3>@ViewBag.Title</h3>
+        </div>
+    </div>
+    <div>
+        <div class="text-center">
+            <label>
+                <i>Số tiền muốn nạp</i>
+                <input type="text" class="form-control fw-bold" id="ipMoney" />
+            </label>
+            <button class="btn btn-primary" id="btnDepositNext">Tiếp theo</button>
+        </div>
+    </div>
+</div>
+<div class="tbl p-3 flex-grow-1 d-flex flex-column mt-3">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h4>Lịch sử nạp</h4>
+        </div>
+        <div class="d-flex">
+            <div class="input-group">
+                <input class="form-control form-control-sm d-inline-block" />
+                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="table" class="flex-grow-1 d-flex flex-column mt-3" style="height:100px">
+        @*Render table*@
+    </div>
+</div>
+<div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+    <script>
+        $(document).ready(function () {
+            var ipMoney = new AutoNumeric("#ipMoney", {
+                currencySymbol: ' VND',
+                currencySymbolPlacement: 's',
+                decimalPlaces: 0,
+                minimumValue: '0',
+                maximumValue: '999999999'
+            });
+            function DataBind() {
+                Loading.show("#table");
+                $.ajax({
+                    url: "/Deposit/GetAll",
+                    method: "GET",
+                    data: {
+                        searchText: $("#searchtext").val(),
+                        curPage: $(".page-item.active").attr("data-pagenum") ?? 1,
+                    },
+                    error: function (err) {
+                        Loading.hide("#table");
+                        toastr.error(err);
+                    },
+                    success: function (rs) {
+                        Loading.hide("#table");
+                        if (rs.success != null && rs.success != undefined && !rs.success) {
+                            Alert.Error(rs.message);
+                        }
+                        else {
+                            $("#table").html(rs);
+                        }
+                    }
+                });
+            }
+            DataBind();
+            $("#btnDepositNext").click(function () {
+                Loading.show(".main");
+                $.ajax({
+                    url: "/Deposit/Detail",
+                    method: "GET",
+                    data: {
+                        Amount: ipMoney.getNumber(),
+                    },
+                    error: function (err) {
+                        Loading.hide(".main");
+                        toastr.error(err);
+                    },
+                    success: function (rs) {
+                        Loading.hide(".main");
+                        $("#modal .modal-title").html("Thông tin chuyển khoản");
+                        $("#modal .modal-body").html(rs);
+                        $("#modal").modal("show");
+                    }
+                });
+            });
+        });
+    </script>
+}

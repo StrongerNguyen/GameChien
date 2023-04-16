@@ -1,0 +1,49 @@
+﻿@using GameChien.Models.Dto
+@model RoomDto
+@{
+    List<RoomTypeDto> roomTypes = (List<RoomTypeDto>)ViewBag.RoomTypeList;
+    RoomFeeDto roomFee = (RoomFeeDto)ViewBag.RoomFee;
+    int MinBet = (int)ViewBag.MinBet;
+}
+<div>
+    @Html.TextBoxFor(t => t.Id, new { @hidden = "hidden" })
+    <table>
+        <tr>
+            <td colspan="2">
+                <div class="d-flex justify-content-center mb-3">
+                    @foreach (var item in roomTypes)
+                    {
+                        <label class="mx-3" style="cursor:pointer">
+                            <input type="radio" name="RoomTypeId" value="@item.Id" @(roomTypes.IndexOf(item) == 0 ? "checked" : "") /> @item.Name
+                        </label>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr class="ipgorange">
+            <td class="title">Tên phòng:</td>
+            <td>@Html.TextBoxFor(t => t.Name, new { @class = "form-control" })</td>
+        </tr>
+        <tr class="ipgorange">
+            <td class="title">Mức cược (>= 50,000VND):</td>
+            <td>
+                @Html.TextBoxFor(t => t.AmountBet, new { @class = "form-control" })
+            </td>
+        </tr>
+        <tr class="ipgorange">
+            <td class="title"><i>Mật khẩu (phòng riêng tư):</i></td>
+            <td>
+                @Html.TextBoxFor(t => t.Password, new { @class = "form-control" })
+            </td>
+        </tr>
+        <tr class="ipgorange">
+            <td class="title"><i>Phí:</i></td>
+            <td><input id="Password" name="Password" type="text" value=" @(roomFee.FeeValue+(roomFee.isPercent?"%":"VND"))" readonly></td>
+        </tr>
+    </table>
+    <div class="popupmessage">
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <button type="button" id="btnUpdate" class="d-inline-block mx-auto btnblue">@(Model.Id==Guid.Empty?"Thêm mới":"Cập nhật")</button>
+    </div>
+</div>

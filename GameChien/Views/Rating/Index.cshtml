@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Xếp hạng";
+    ViewBag.route = "bang-xep-hang";
+}
+
+<style>
+
+    .tbl {
+        color: white;
+        background-color: #141d24;
+        opacity: 0.8;
+    }
+
+        .tbl table {
+            color: white;
+        }
+
+            .tbl table thead {
+                font-weight: bold;
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            .tbl table tbody {
+                text-align: center;
+            }
+
+                .tbl table tbody tr.r {
+                    cursor: pointer;
+                }
+
+                    .tbl table tbody tr.r:hover {
+                        background-color: #0e4c7c;
+                    }
+</style>
+<div class="tbl mt-3 p-4 d-flex flex-column flex-grow-1">
+    <div class="d-flex flex-row justify-content-center">
+        <div>
+            <button class="btn btn-sm btn-primary me-2">Tuần</button>
+            <button class="btn btn-sm btn-outline-primary me-2 text-nowrap">Tháng</button>
+            <button class="btn btn-sm btn-outline-primary me-2 text-nowrap">Năm</button>
+        </div>
+ 
+    </div>
+    <div class="flex-grow-1">
+        <table class="table mt-3 mb-0">
+            <thead>
+                <tr>
+                    <td>Xếp hạng</td>
+                    <td>Người chơi</td>
+                    <td>Coin</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="r">
+                    <td>#1</td>
+                    <td>tuilatop1</td>
+                    <td>1.000.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

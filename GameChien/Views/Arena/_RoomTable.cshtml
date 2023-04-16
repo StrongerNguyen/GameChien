@@ -1,0 +1,70 @@
+﻿@model List<GameChien.Models.Dto.RoomDto>
+<div class="flex-grow-1 overflow-auto">
+    <table class="" style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-center" style="width:8%">Mã phòng</th>
+                <th class="text-center">Tên phòng</th>
+                <th class="text-center" style="width:10%">Kiểu thi đấu</th>
+                <th class="text-center" style="width:8%">Mức cược</th>
+                <th class="text-center" style="width:8%">Người chơi</th>
+                <th class="text-center" style="width:8%">Loại phòng</th>
+                <th class="text-center">Người tạo</th>
+                <th class="text-center" style="width:8%">Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr data-id='@item.Id' style="cursor:pointer;@(item.r%2==0?"background:#182330;":"")">
+                    <td style='text-align:center;vertical-align:middle'>@item.Code</td>
+                    <td style='text-align:center;vertical-align:middle'>@item.Name</td>
+                    <td style='text-align:center;vertical-align:middle'>@item.RoomTypeName</td>
+                    <td style='text-align:center;vertical-align:middle'>@item.AmountBet.ToString("N0")</td>
+                    <td style='text-align:center;vertical-align:middle'>@(item.NumOfJoined+"/"+item.TotalNumOfPlayer)</td>
+                    <td style='text-align:center;vertical-align:middle'>@(string.IsNullOrEmpty(item.Password)?"Công khai":"Riêng tư")</td>
+                    <td style='text-align:center;vertical-align:middle'>@item.CreatedByPlayer</td>
+                    <td style='text-align:center;vertical-align:middle'>@(item.StartTime==null?"Đang chờ":(item.EndTime==null?"Đang diễn ra":"Đã kết thúc"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<nav class="mt-3" aria-label="...">
+    <ul class="pagination justify-content-center flex-wrap m-1">
+        @{
+            int maxPage = (int)ViewBag.maxPage;
+            int curPage = (int)ViewBag.curPage;
+            if (curPage > 3)
+            {
+                <li class='page-item' data-pagenum='1'><a class='page-link' href='#'>First - 1</a></li>
+            }
+            if (curPage > 4)
+            {
+                <li class='page-item' data-pagenum='@(curPage-1)'><a class='page-link' href='#'>Prev</a></li>
+            }
+            for (var i = 1; i <= maxPage; i++)
+            {
+                if (i == curPage)
+                {
+                    <li class='page-item active' data-pagenum='@i'><a class='page-link' href='#'>@i</a></li>
+                }
+                else
+                {
+                    if (i > curPage - 3 && i < curPage + 3)
+                    {
+                        <li class='page-item' data-pagenum='@i'><a class='page-link' href='#'>@i</a></li>
+                    }
+                }
+            }
+            if (curPage < maxPage - 3)
+            {
+                <li class='page-item' data-pagenum='@(curPage+1)'><a class='page-link' href='#'>Next</a></li>
+            }
+            if (curPage < maxPage - 2)
+            {
+                <li class='page-item' data-pagenum='@maxPage'><a class='page-link' href='#'>Last - @maxPage</a></li>
+            }
+        }
+    </ul>
+</nav>

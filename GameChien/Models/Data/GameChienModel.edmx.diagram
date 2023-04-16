@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7966034bb69f4b2d8cec8698be819d46" Name="Diagram1">
+        <EntityTypeShape EntityType="GameChienModel.tblBank" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="GameChienModel.tblBankAccountByPlayer" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="GameChienModel.tblConfigTransactionByMobileApp" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GameChienModel.tblCreditHistory" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="GameChienModel.tblDeposit" Width="1.5" PointX="6" PointY="17.375" />
+        <EntityTypeShape EntityType="GameChienModel.tblKickOutRoom" Width="1.5" PointX="3" PointY="19.125" />
+        <EntityTypeShape EntityType="GameChienModel.tblLogOfMobileApp" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GameChienModel.tblMatching" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="GameChienModel.tblNotification" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="GameChienModel.tblPermission" Width="1.5" PointX="6.75" PointY="34" />
+        <EntityTypeShape EntityType="GameChienModel.tblPlayer" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="GameChienModel.tblPlayer_Room" Width="1.5" PointX="6" PointY="13.25" />
+        <EntityTypeShape EntityType="GameChienModel.tblRelationship" Width="1.5" PointX="3" PointY="25.5" />
+        <EntityTypeShape EntityType="GameChienModel.tblRole" Width="1.5" PointX="3.75" PointY="30" />
+        <EntityTypeShape EntityType="GameChienModel.tblRole_Permission" Width="1.5" PointX="9" PointY="30" />
+        <EntityTypeShape EntityType="GameChienModel.tblRoom" Width="1.5" PointX="6" PointY="7.625" />
+        <EntityTypeShape EntityType="GameChienModel.tblRoomFee" Width="1.5" PointX="3.75" PointY="2.5" />
+        <EntityTypeShape EntityType="GameChienModel.tblRoomType" Width="1.5" PointX="3.75" PointY="5.375" />
+        <EntityTypeShape EntityType="GameChienModel.tblTransaction" Width="1.5" PointX="3.75" PointY="32.875" />
+        <EntityTypeShape EntityType="GameChienModel.tblUser" Width="1.5" PointX="6" PointY="29.375" />
+        <EntityTypeShape EntityType="GameChienModel.tblUser_Permission" Width="1.5" PointX="8.25" PointY="27" />
+        <EntityTypeShape EntityType="GameChienModel.tblWithdraw" Width="1.5" PointX="8.25" PointY="9.625" />
+        <EntityTypeShape EntityType="GameChienModel.tblConfig" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="GameChienModel.FK_tblBankAccountByPlayer_tblBank" />
+        <AssociationConnector Association="GameChienModel.FK_tblBankAccountByPlayer_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblWithdraw_tblBankAccountByPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblPayin_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblPayin_tblTransaction" />
+        <AssociationConnector Association="GameChienModel.FK_tblKickOutRoom_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblMatching_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblMatching_tblRoomType" />
+        <AssociationConnector Association="GameChienModel.FK_tblRole_Permission_tblPermission" />
+        <AssociationConnector Association="GameChienModel.FK_tblUser_Permission_tblPermission" />
+        <AssociationConnector Association="GameChienModel.FK_tblPlayer_Room_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblRelationship_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblRelationship_tblPlayer1" />
+        <AssociationConnector Association="GameChienModel.FK_tblRoom_tblPlayer" />
+        <AssociationConnector Association="GameChienModel.FK_tblPlayer_Room_tblRoom" />
+        <AssociationConnector Association="GameChienModel.FK_tblRole_Permission_tblRole" />
+        <AssociationConnector Association="GameChienModel.FK_tblUser_tblRole" />
+        <AssociationConnector Association="GameChienModel.FK_tblRoom_tblRoomFee" />
+        <AssociationConnector Association="GameChienModel.FK_tblRoom_tblRoomType" />
+        <AssociationConnector Association="GameChienModel.FK_tblTransaction_tblUser" />
+        <AssociationConnector Association="GameChienModel.FK_tblUser_Permission_tblUser" />
+        <AssociationConnector Association="GameChienModel.FK_tblWithdraw_tblUser" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

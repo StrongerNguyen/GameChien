@@ -1,0 +1,11 @@
+﻿@model GameChien.Models.Dto.HistoryDto
+<tr data-id='@Model.RoomId' style="cursor:pointer">
+    <td style='text-align:center;vertical-align:middle'>#@Model.RoomCode</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.RoomName</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.RoomTypeName</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.AmountBet.ToString("N0")</td>
+    <td style='text-align:center;vertical-align:middle'>@(string.IsNullOrEmpty(Model.Password)?"Công khai":"Riêng tư")</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.StartTime?.ToString("dd/MM/yyyy HH:mm:ss")??"")</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.EndTime?.ToString("dd/MM/yyyy HH:mm:ss")??"")</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.StartTime==null?"Chờ bắt đầu": (Model.EndTime == null?"Đang diễn ra":(Model.isWin==null?"Đang xử lý":(Model.isWin.Value?"Chiến thắng":"Thất bại"))))</td>
+</tr>

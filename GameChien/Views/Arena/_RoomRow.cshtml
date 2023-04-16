@@ -1,0 +1,11 @@
+﻿@model GameChien.Models.Dto.RoomDto
+<tr data-id='@Model.Id' style="cursor:pointer">
+    <td style='text-align:center;vertical-align:middle'>@Model.Code</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.Name</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.RoomTypeName</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.AmountBet.ToString("N0")</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.NumOfJoined+"/"+ Model.TotalNumOfPlayer)</td>
+    <td style='text-align:center;vertical-align:middle'>@(string.IsNullOrEmpty(Model.Password)?"Công khai":"Riêng tư")</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.CreatedByPlayer</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.StartTime==null?"Đang chờ":(Model.EndTime==null?"Đang diễn ra":"Đã kết thúc"))</td>
+</tr>

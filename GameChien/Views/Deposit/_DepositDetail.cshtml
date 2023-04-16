@@ -1,0 +1,30 @@
+﻿<div class="m-auto d-flex flex-column align-items-center">
+    <div class="m-3">Quý khách vui lòng chuyển khoản với thông tin như sau:</div>
+    <ul class="d-inline-block mb-0">
+        <li>
+            Ngân hàng:
+            <label class="m-1">
+                <input class="form-check-input" name="BankName" type="radio" data-bankaccountnumber="111111" data-bankfullname="NGUYEN VAN A" value="VietcomBank" checked=""> <b class="fs-6">VIETCOMBANK</b>
+            </label>
+        </li>
+        <li class="my-2">
+            Số tài khoản: <b class="text-danger fs-6" id="txtBankAccountNumber">1111111</b>
+            <span id="btnCopyBankAccountNumber" style="cursor:pointer;background-color:#ffe180;border-radius:3px" class="px-1 ms-2">copy</span>
+            <input type="text" name="BankAccountNumber" value="1029456870" hidden="">
+        </li>
+        <li class="my-2">
+            Tên người nhận: <b class="text-info fs-6" id="txtBankFullName">NGUYEN VAN A</b>
+            <input type="text" name="BankFullName" value="NGUYEN VAN A" hidden="">
+        </li>
+        <li class="my-2">
+            Số tiền chuyển: <b class="text-danger fs-6">@ViewBag.Amount VND</b>
+            <span id="btnCopyAmount" style="cursor:pointer;background-color:#ffe180;border-radius:3px" class="px-1 ms-2">copy</span>
+            <input type="text" name="Amount" value="120000" class="" hidden="">
+        </li>
+        <li class="my-2">
+            Nội dung chuyển <b class="text-danger">*</b>: <b class="text-success fs-6" id="txtNote">0987654321</b>
+            <span id="btnCopyNote" style="cursor:pointer;background-color:#ffe180;border-radius:3px" class="px-1 ms-2">copy</span>
+            <input type="text" name="Note" value="0987654321" hidden="">
+        </li>
+    </ul>
+</div>

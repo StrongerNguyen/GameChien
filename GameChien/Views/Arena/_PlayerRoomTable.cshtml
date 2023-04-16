@@ -1,0 +1,133 @@
+﻿@using GameChien.Models
+@using GameChien.Models.Dto
+@{
+    UserSessionModel userSession = (UserSessionModel)Session[CommonConstants.User_Session];
+
+    List<Player_RoomDto> players_Room = (List<Player_RoomDto>)ViewBag.players_room;
+
+    var teamA = players_Room.Where(t => !t.isTeam).ToList();
+    var teamB = players_Room.Where(t => t.isTeam).ToList();
+
+    RoomDto room = (RoomDto)ViewBag.room;
+
+}
+<style>
+    .roomframe {
+        border-radius: 5px;
+        border: 2px solid #F5AD24;
+        background-color: rgba(0, 0, 0, 0.75);
+    }
+
+        .roomframe .roominfo {
+            display: flex;
+        }
+</style>
+<div>
+    <div class="d-flex align-items-center" style="cursor:pointer" id="btnLeave" data-id="@room.Id">
+        <i class="fa fa-angle-left mx-2" style="font-size:40px"></i>
+        <h5 style="margin:0;">Thoát phòng</h5>
+    </div>
+</div>
+<div class="roomframe mt-3">
+    <div class="roominfo d-flex justify-content-center align-items-center" style="margin-top:-40px">
+        <div class="px-5 py-4" style="background-image:url(/Content/Images/roomcodeframe.png);background-size:100% 100%;z-index:10;font-weight:bold;font-size:20px">
+            Code: #@room.Code
+        </div>
+        <div style="background-image: url(/Content/Images/roomamountbet.png); background-size: 100% 100%; margin-left: -1.5rem;font-weight:600;font-size:18px" class="py-1 px-5">
+            Mức cược: @room.AmountBet.ToString("N0")
+        </div>
+    </div>
+    <div class="d-flex p-4 align-items-center">
+        <div class="d-flex flex-column flex-grow-1 align-content-center p-3">
+            @foreach (var item in teamA)
+            {
+                <div class="d-flex py-2 px-3 my-1 justify-content-between" style="background-color: #2a343c; font-size: 18px; border-radius: 2px;">
+                    <div>
+                        <img src="@item.Avatar" style="max-width:30px" />
+                        <span class="mx-2">@(item.AccountName+" ("+item.GameAccount+")")</span>
+                    </div>
+                    @if (item.isOwner)
+                    {
+                        <b class="mx-2">Chủ phòng</b>
+                    }
+                    else
+                    {
+                        if (item.isReady)
+                        {
+                            <b class="mx-2"><i class="text-success">Đã sẵn sàng</i></b>
+                        }
+                        else
+                        {
+                            <b class="mx-2"><i class="text-warning">Chưa sẵn sàng</i></b>
+                        }
+                    }
+                    <div>
+                        @if (!item.isOwner && !item.isReady)
+                        {
+                            <button class="btn btn-sm btn-danger">Kích</button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="attachicon p-4">
+            <img src="~/Content/Images/attachicon.png" style="max-width:100px" />
+        </div>
+        <div class="d-flex flex-column flex-grow-1 align-content-center p-3">
+            @foreach (var item in teamB)
+            {
+                <div class="d-flex py-2 px-3 my-1 justify-content-between" style="background-color: #2a343c; font-size: 18px; border-radius: 2px;">
+                    <div>
+                        <img src="@item.Avatar" style="max-width:30px" />
+                        <span class="mx-2">@(item.AccountName+" ("+item.GameAccount+")")</span>
+                    </div>
+                    @if (item.isOwner)
+                    {
+                        <b class="mx-2">Chủ phòng</b>
+                    }
+                    else
+                    {
+                        if (item.isReady)
+                        {
+                            <b class="mx-2"><i class="text-success">Đã sẵn sàng</i></b>
+                        }
+                        else
+                        {
+                            <b class="mx-2"><i class="text-warning">Chưa sẵn sàng</i></b>
+                        }
+                    }
+                    <div>
+                        @if (!item.isOwner && !item.isReady && userSession.UserId != item.PlayerId)
+                        {
+                            <button class="btn btn-sm btn-danger">Kích</button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+
+    <div class="d-flex justify-content-center p-3">
+        @if (room.StartTime == null)
+        {
+            if (players_Room.Count(t => t.isOwner && t.PlayerId == userSession.UserId) > 0)
+            {
+                <button class="btnblue mx-2" id="btnStart" data-id="@room.Id">Bắt đầu</button>
+            }
+            else
+            {
+                <button class="btnblue mx-2 px-5" id="btnReady" data-id="@room.Id">@(players_Room.Count(t=>t.isReady&&t.PlayerId==userSession.UserId)>0 ? "Bỏ sẵn sàng" : "Sẵn sàng")</button>
+            }
+
+        }
+        else
+        {
+            if (players_Room.FirstOrDefault(t => t.PlayerId == userSession.UserId)?.isVoteWin == null)
+            {
+                <button class="btnblue mx-2" id="btnEnd" data-id="@room.Id">Trận đấu kết thúc</button>
+            }
+        }
+    </div>
+</div>

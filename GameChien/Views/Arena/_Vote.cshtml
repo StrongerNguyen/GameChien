@@ -1,0 +1,7 @@
+﻿@model Guid
+<h2>Kết quả trận đấu này của bạn thế nào?</h2>
+(Vui lòng cho chúng tôi biết kết quả chính xác nhất để tránh rủi ro với tài khoản của bạn. Xin cảm ơn.)
+<div id="vote" class="mt-3 d-flex justify-content-center">
+    <button class="mx-2" data-id="@Model" data-iswin="false"><b><i class="fa fa-frown-o"></i> Đã thua</b></button>
+    <button class="btnblue mx-2" data-id="@Model" data-iswin="true"><b><i class="fa fa-smile-o"></i> Đã thắng</b></button>
+</div>

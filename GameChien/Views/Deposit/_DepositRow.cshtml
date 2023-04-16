@@ -1,0 +1,7 @@
+﻿@model GameChien.Models.Dto.DepositDto
+<tr data-id='@Model.Id' style="cursor:pointer">
+    <td style='text-align:center;vertical-align:middle'>#@Model.CreatedTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+    <td style='text-align:center;vertical-align:middle'>@Model.Amount</td>
+    <td style='text-align:center;vertical-align:middle'>@(Model.Status==null?"Đang xử lý":(Model.Status.Value?"Đã cộng tiền":"Không được duyệt"))</td>
+    <td style='text-align:center;vertical-align:middle'>Cần bổ sung bằng chứng</td>
+</tr>
